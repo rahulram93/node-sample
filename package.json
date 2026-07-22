@@ -1,12 +1,12 @@
 {
   "name": "node_app",
-  "version": "1.0.0",
+  "version": "1.0.1-20260722121510-fb",
   "description": "npm install",
   "main": "meadowlark.js",
   "dependencies": {
     "express": "^4.16.4",
     "express3-handlebars": "^0.5.2",
-    "handlebars": "^4.0.12"
+    "handlebars": "^4.7.9"
   },
   "devDependencies": {},
   "scripts": {

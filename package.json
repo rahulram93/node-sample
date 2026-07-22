@@ -1,6 +1,6 @@
 {
   "name": "node_app",
-  "version": "1.0.0",
+  "version": "1.0.1-20260722121503-fb",
   "description": "npm install",
   "main": "meadowlark.js",
   "dependencies": {

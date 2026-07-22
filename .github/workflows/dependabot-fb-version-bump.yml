@@ -1,0 +1,35 @@
+# .github/workflows/dependabot-fb-version-bump.yml
+name: Dependabot fb version bump
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]   # re-run on every PR update
+    branches:
+      - "fb-**"          # only PRs targeting fb branches
+
+permissions:
+  contents: write         # Dependabot-triggered runs are read-only by default
+
+jobs:
+  bump:
+    if: github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}   # check out the PR branch itself
+
+      - name: Bump version to <base>-<timestamp>-fb
+        run: |
+          TS=$(date -u +%Y%m%d%H%M%S)
+          CUR=$(node -p "require('./package.json').version")
+          BASE=${CUR%%-*}               # strip any existing prerelease suffix
+          if [ "$CUR" = "$BASE" ]; then
+            # first fb bump on this base version -> increment patch
+            BASE=$(node -p "v='$BASE'.split('.'); v[2]=+v[2]+1; v.join('.')")
+          fi
+          npm version "${BASE}-${TS}-fb" --no-git-tag-version
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -am "chore: bump version to $(node -p "require('./package.json').version")"
+          git push

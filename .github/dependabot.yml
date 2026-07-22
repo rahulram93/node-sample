@@ -1,0 +1,17 @@
+# .github/dependabot.yml
+# NOTE: this file must live on the default branch (main),
+# even though the PRs it raises target the fb branch below.
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Kolkata"
+    # Raise version-update PRs against the fb branch, not main.
+    # Must be an exact, existing branch name (no wildcards).
+    target-branch: "fb-dependency-updates"
+    # Bump the requirement in package.json too, not just package-lock.json.
+    versioning-strategy: "increase"
